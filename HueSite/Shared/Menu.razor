@@ -1,0 +1,16 @@
+﻿@inject NavigationManager nav
+
+<div class="item"><div @onclick="(() => nav.NavigateTo(Homepage))"><i class="fa fa-fw fa-home"></i> Homepage</div></div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"><i class="fa fa-code"></i> item</div>
+
+
+
+@code {
+    string Homepage = "/";
+}

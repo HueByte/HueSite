@@ -1,0 +1,126 @@
+﻿@page "/"
+@using System.Threading;
+@layout MenuLayout
+
+<div class="Menubody">
+    <div class="GridContainer">
+        <a href="/Downloads">
+            <div class="MediumTile">
+                <img src="/icons/download.png" />
+                <div class="Hover-Content">
+                    Downlaods
+                </div>
+            </div>
+        </a>
+        <div class="MediumTile">
+            <img src="/icons/note.png" />
+            <div class="Hover-Content">
+                Notes
+            </div>
+        </div>
+        <div class="MediumTile">
+            <img src="/icons/heart.png" />
+            <div class="Hover-Content">
+                Losowy Cytacik
+            </div>
+        </div>
+        <a href="/Page">
+            <div class="MediumTile">
+                <img src="/icons/program.png" />
+                <div class="Hover-Content">
+                    Programs
+                </div>
+            </div>
+        </a>
+        <div class="LongTile">
+            <h3>Welcome to homepage!</h3>
+            <p>
+                Hey this is my micro-developing page.
+                There's nothing interesting for now but it's made in Blazor!
+            </p>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    string bgColor;
+    string bgOutput;
+    string GetRequest = "null";
+    string Status;
+    string Address;
+    string pop = "0";
+    bool progress = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Status = "GetRequest";
+        bgColor = "";
+        bgOutput = "x";
+        Address = "";
+    }
+
+    void Pop()
+    {
+        pop = "1";
+    }
+
+    void RandomColor()
+    {
+        if (!progress)
+        {
+            progress = true;
+            Random rnd = new Random();
+            byte r = (byte)rnd.Next(1, 256);
+            byte g = (byte)rnd.Next(1, 256);
+            byte b = (byte)rnd.Next(1, 256);
+            bgColor = $"rgb({r},{g},{b})";
+            char[] arr = bgColor.ToCharArray();
+            Output(arr);
+            Console.WriteLine(bgColor);
+        }
+        else { }
+    }
+
+    async void Output(char[] array)
+    {
+        bgOutput = "";
+        foreach (var x in array)
+        {
+            await Task.Delay((700 / array.Length));
+            bgOutput += x;
+            StateHasChanged();
+        }
+        progress = false;
+    }
+
+    void GetAsync()
+    {
+        if (!(string.IsNullOrEmpty(Address) && string.IsNullOrWhiteSpace(Address)))
+        {
+            Status = "Loading...";
+            Task.Run(async () =>
+            {
+
+                try
+                {
+                    HttpClient client = new HttpClient();
+                    client.Timeout = TimeSpan.FromSeconds(3000);
+                    GetRequest = await client.GetStringAsync(Address);
+                    Status = "GetRequest";
+                    InvokeAsync(StateHasChanged);
+                }
+                catch (Exception e)
+                {
+                    GetRequest = e.Message.ToString();
+                    Status = "GetRequest";
+                    InvokeAsync(StateHasChanged);
+                }
+            });
+        }
+        else
+        {
+            GetRequest = "Address is empty!";
+        }
+    }
+}

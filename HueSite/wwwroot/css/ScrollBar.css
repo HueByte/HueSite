@@ -1,0 +1,15 @@
+﻿::-webkit-scrollbar {
+    width: 1vw;
+    background: #545454;
+}
+
+::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: darkturquoise;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: darkcyan;
+    }

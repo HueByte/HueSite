@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager nav
+
+<div class="main-layout">
+    <div class="mobile-menu @isCollapsed">
+        <div class="button-closer" @onclick="Toggle"><i class="fa fa-close"></i></div>
+        <Menu />
+    </div>
+    <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
+    <div class="main-container">
+        <div class="menu">
+            <Menu />
+        </div>
+        <main class="main-content">
+            @Body
+        </main>
+    </div>
+</div>
+
+@code
+{
+    bool collapse = true;
+    string isCollapsed = "";
+
+    void Toggle()
+    {
+        collapse = !collapse;
+        isCollapsed = collapse ? "" : "NoCollapse";
+    }
+}

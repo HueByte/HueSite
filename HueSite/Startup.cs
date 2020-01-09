@@ -46,6 +46,8 @@ namespace HueSite
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseBrowserLink();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

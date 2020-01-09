@@ -1,4 +1,5 @@
 ﻿@page "/page"
+@using System.Globalization
 
 <h3 style="text-align:center;">Welcome to programs!</h3>
 <h2>About:</h2>
@@ -63,8 +64,46 @@
     You can find here programs made via Blazor.
 </p>
 
+<h4>@time</h4>
+<h4 style="color: red;">@polish</h4>
 
 
 @code {
+
+    DateTime date;
+    string time;
+    string polish;
+
+    protected override async Task OnInitializedAsync()
+    {
+        /*while(true)
+        {
+            time = await Timer();
+            await Task.Delay(1000);
+            StateHasChanged();
+        }*/
+        date = new DateTime();
+        await Task.Run(async () =>
+        {
+            while (true)
+            {
+                time = DateTime.Now.ToString();
+
+                await Task.Delay(1000);
+
+                CultureInfo ci = new CultureInfo("pl-PL");
+                DateTime dt = DateTime.Now;
+                polish = DateTime.Now.ToString("f", ci);
+
+                await InvokeAsync(StateHasChanged);
+            }
+        });
+    }
+
+    public async Task<string> Timer()
+    {
+        return DateTime.Now.ToString();
+    }
+
 
 }

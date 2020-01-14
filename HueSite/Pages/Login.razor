@@ -1,0 +1,71 @@
+﻿@page "/login"
+@using Data
+@using Data.Models
+@inject AuthenticationStateProvider AuthState
+@inject NavigationManager NavMag
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+xxxxxxxxxxxxxxxxxxx
+    <EditForm Model="@user" OnValidSubmit="@ValidateUser">
+        <div>
+            <br /><br /><br /><br /><br />
+        </div>
+        <div>
+            <h3 style="font-weight:bold; color:purple">Book Stores Login</h3>
+        </div>
+        <div>
+            <br />
+        </div>
+        <div class="col-12 row">
+            <input class="form-control col-12" @bind="user.EmailAddress" placeholder="email address" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <input type="password" class="form-control col-12" @bind="user.Password" placeholder="password" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <span class="col-12"></span>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
+            <a href="/signup" class="col-3">Sign up</a>
+        </div>
+
+    </EditForm>
+
+    <AuthorizeView>
+        <Authorized>
+            Welcome @context.User.Identity.Name
+            <button @onclick="Logout">Logout</button>
+        </Authorized>
+        <NotAuthorized>
+            lol nope
+        </NotAuthorized>
+    </AuthorizeView>
+
+<h3>Login</h3>
+
+@code {
+    private User user;
+
+    protected override Task OnInitializedAsync()
+    {
+        user = new User();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        ((CustomAuthenticationStateProvider)AuthState).MarkUserAsAuthenticated(user.EmailAddress);
+
+        await sessionStorage.SetItemAsync("emailAddress", user.EmailAddress);
+
+        return await Task.FromResult(true);
+    }
+
+    public void Logout()
+    {
+        ((CustomAuthenticationStateProvider)AuthState).MarkUserAsLoggedOut();
+
+    }
+
+}

@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Design;
-using HueSite.Data;
 using Blazored.SessionStorage;
+using Microsoft.AspNetCore.Identity;
+using HueSite.Areas.Identity;
+using HueSite.Data.Services;
+using HueSite.Data.IServices;
 
 namespace HueSite
 {
@@ -26,8 +29,10 @@ namespace HueSite
 
         public void ConfigureCustomServices()
         {
-            services.AddScoped<AuthenticationStateProvider, Data.CustomAuthenticationStateProvider>();
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
             services.AddBlazoredSessionStorage();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddScoped<IAdmin, Admin>();
         }
         
         public void ConfigureContext()

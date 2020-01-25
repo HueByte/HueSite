@@ -1,0 +1,109 @@
+﻿@page "/admin"
+@using HueSite.Data.IServices
+@using Microsoft.AspNetCore.Identity;
+@inject IAdmin admin
+@attribute [Authorize(Roles = "admin")]
+
+<div style="width: 100%; text-align: center; cursor: pointer;">
+    <h3>Admin Panel</h3>
+</div>
+
+<h2>Role manager</h2>
+<button class="Clear-Button action-button @state" @onclick="AddRole">Add role</button>
+<input @bind="name" placeholder="Role name" />
+
+<button class="Clear-Button action-button @state" @onclick="ApplyRoleToUser">Apply role to user</button>
+<input @bind="username" placeholder="Username" />
+<input @bind="roleName" placeholder="Role name" />
+
+<button class="Clear-Button action-button" @onclick="RemoveRole">Remove role</button>
+<input @bind="roleToDelete" placeholder="Role name" />
+
+@if (users.Count == 0)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in users)
+            {
+                <tr>
+                    <th scope="row">@x.Id</th>
+                    <td>@x.UserName</td>
+                    <td>@x.Email</td>
+                    <td>@x.PasswordHash</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    string name = "";
+    string state = "";
+
+    string username;
+    string roleName;
+
+    string roleToDelete;
+
+    List<IdentityUser> users;
+
+
+    string debugFeedback = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        users = await admin.GetUsers();
+    }
+
+    async Task AddRole()
+    {
+        try
+        {
+            await admin.Create(name);
+
+            await Task.Run(async () =>
+            {
+                state = "green";
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(3000);
+                state = "";
+                await InvokeAsync(StateHasChanged);
+            });
+        }
+        catch
+        {
+            await Task.Run(async () =>
+            {
+                state = "red";
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(3000);
+                state = "";
+                await InvokeAsync(StateHasChanged);
+            });
+        }
+    }
+
+    async Task ApplyRoleToUser()
+    {
+        await admin.AddRole(roleName, username);
+    }
+
+    async Task RemoveRole()
+    {
+        await admin.RemoveRole(roleToDelete);
+    }
+
+}

@@ -1,9 +1,7 @@
 ﻿@page "/page"
 @using System.Globalization
 @using Data
-@using Data.Models
 @inject DatabaseContext context
-
 
 <h3 style="text-align:center;">Welcome to programs!</h3>
 <h2>About:</h2>
@@ -70,25 +68,15 @@
 
 <h4>@time</h4>
 <h4 style="color: red;">@polish</h4>
-<button @onclick="add">add</button>
-@users
 
 @code {
 
     DateTime date;
     string time;
     string polish;
-    User usr;
-    string users;
 
     protected override async Task OnInitializedAsync()
     {
-        /*while(true)
-        {
-            time = await Timer();
-            await Task.Delay(1000);
-            StateHasChanged();
-        }*/
         date = new DateTime();
         await Task.Run(async () =>
         {
@@ -111,26 +99,5 @@
     {
         return DateTime.Now.ToString();
     }
-
-    public async Task add()
-    {
-
-        usr = new User()
-        {
-            EmailAddress = "test",
-            Password = "test"
-        };
-
-        context.Users.Add(usr);
-        await context.SaveChangesAsync();
-        Console.WriteLine("Done");
-    }
-
-    public async Task Show()
-    {
-        var nUser = context.Users.Any();
-
-    }
-
 
 }

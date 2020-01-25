@@ -9,6 +9,42 @@
     min-height: 100vh;
 }*/
 
+.AuthBody {
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    font-size: 2vh;
+    overflow: auto;
+}
+
+.AuthTiles {
+    position: relative;
+    background-color: white;
+    height: 20vh;
+    width: 20vw;
+    margin: 1em;
+    font-size: 3vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition-duration: 700ms;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.AuthTiles a, a:visited, a:active, a:hover
+{
+    color: black !important;
+    text-decoration: none !important;
+}
+
 .Menubody {
     background-color: rgb(27, 27, 27);
     display: flex;
@@ -44,17 +80,22 @@
         overflow: hidden;
     }
 
-        .GridContainer .MediumTile:hover {
+        .GridContainer .MediumTile:hover, .AuthTiles:hover{
             transform: scale(1.05);
             background-color: rgb(27, 27, 27);
             color: white;
             box-shadow: 0 0 10px rgba(255, 255, 255, 1);
         }
 
-            .GridContainer .MediumTile:hover .Hover-Content {
-                bottom: 0vh;
-                color: black;
-            }
+        .GridContainer .MediumTile:hover, .AuthTiles:hover a{
+            color: white;
+        }
+
+
+.GridContainer .MediumTile:hover .Hover-Content {
+    bottom: 0vh;
+    color: black;
+}
 
 
 
@@ -173,12 +214,4 @@
     font-weight: bold;
     border-radius: 1%;
     overflow: scroll;
-}
-
-input {
-    width: 80%;
-    padding: 2px 4px;
-    margin: 8px 0;
-    border-radius: 10%;
-    cursor: pointer;
 }

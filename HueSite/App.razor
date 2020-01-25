@@ -1,12 +1,66 @@
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <CascadingAuthenticationState>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </CascadingAuthenticationState>
-    </NotFound>
-</Router>
+<!--<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeView>
+                <Authorized>
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                </Authorized>
+                <NotAuthorized>
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(LoginLayout)" />
+                </NotAuthorized>
+            </AuthorizeView>
+        </Found>
+        <NotFound>
+            <AuthorizeView>
+                <Authorized>
+                    <AuthorizeRouteView>
+                        <LayoutView Layout="@typeof(MainLayout)">
+                            <p>Sorry, there's nothing at this address.</p>
+                        </LayoutView>
+                    </AuthorizeRouteView>
+                </Authorized>
+                <NotAuthorized>
+                    <AuthorizeRouteView DefaultLayout="@typeof(LoginLayout)" />
+                </NotAuthorized>
+
+            </AuthorizeView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>-->
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+
+        <Found Context="routeData">
+
+            <AuthorizeView>
+                <Authorized>
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                </Authorized>
+                <NotAuthorized>
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(LoginLayout)" />
+                </NotAuthorized>
+            </AuthorizeView>
+
+
+        </Found>
+        <NotFound>
+
+
+            <AuthorizeView>
+                <Authorized>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p>Sorry, there's nothing at this address.</p>
+                    </LayoutView>
+                </Authorized>
+                <NotAuthorized>
+                    <LayoutView Layout="@typeof(LoginLayout)">
+                        <!--Login page-->
+                    </LayoutView>
+                </NotAuthorized>
+            </AuthorizeView>
+
+
+        </NotFound>
+
+    </Router>
+</CascadingAuthenticationState>

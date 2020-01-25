@@ -2,45 +2,52 @@
 @using System.Threading;
 @layout MenuLayout
 
-<div class="Menubody">
-    <div class="GridContainer">
-        <a href="/Downloads">
-            <div class="MediumTile">
-                <img src="/icons/download.png" />
-                <div class="Hover-Content">
-                    Downlaods
+<AuthorizeView>
+    <Authorized>
+        <div class="Menubody">
+            <div class="GridContainer">
+                <a href="/Downloads">
+                    <div class="MediumTile">
+                        <img src="/icons/download.png" />
+                        <div class="Hover-Content">
+                            Downlaods
+                        </div>
+                    </div>
+                </a>
+                <div class="MediumTile">
+                    <img src="/icons/note.png" />
+                    <div class="Hover-Content">
+                        Notes
+                    </div>
+                </div>
+                <div class="MediumTile">
+                    <img src="/icons/heart.png" />
+                    <div class="Hover-Content">
+                        Placeholder
+                    </div>
+                </div>
+                <a href="/Page">
+                    <div class="MediumTile">
+                        <img src="/icons/program.png" />
+                        <div class="Hover-Content">
+                            Programs
+                        </div>
+                    </div>
+                </a>
+                <div class="LongTile">
+                    <h3>Welcome to homepage!</h3>
+                    <p>
+                        Hey this is my micro-developing page.
+                        There's nothing interesting for now but it's made in Blazor!
+                    </p>
                 </div>
             </div>
-        </a>
-        <div class="MediumTile">
-            <img src="/icons/note.png" />
-            <div class="Hover-Content">
-                Notes
-            </div>
         </div>
-        <div class="MediumTile">
-            <img src="/icons/heart.png" />
-            <div class="Hover-Content">
-                Placeholder
-            </div>
-        </div>
-        <a href="/Page">
-            <div class="MediumTile">
-                <img src="/icons/program.png" />
-                <div class="Hover-Content">
-                    Programs
-                </div>
-            </div>
-        </a>
-        <div class="LongTile">
-            <h3>Welcome to homepage!</h3>
-            <p>
-                Hey this is my micro-developing page.
-                There's nothing interesting for now but it's made in Blazor!
-            </p>
-        </div>
-    </div>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        <LoginLayout />
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     string bgColor;

@@ -1,109 +1,363 @@
 ﻿@page "/admin"
 @using HueSite.Data.IServices
 @using Microsoft.AspNetCore.Identity;
+@using HueSite.Data.Models
 @inject IAdmin admin
+@inject UserManager<IdentityUser> userManager
 @attribute [Authorize(Roles = "admin")]
 
-<div style="width: 100%; text-align: center; cursor: pointer;">
+<div style="width: 100%; text-align: center;">
     <h3>Admin Panel</h3>
 </div>
 
-<h2>Role manager</h2>
-<button class="Clear-Button action-button @state" @onclick="AddRole">Add role</button>
-<input @bind="name" placeholder="Role name" />
+<button class="Clear-Button action-button @roleButton" @onclick="ShowRole">Role Manager</button>
 
-<button class="Clear-Button action-button @state" @onclick="ApplyRoleToUser">Apply role to user</button>
-<input @bind="username" placeholder="Username" />
-<input @bind="roleName" placeholder="Role name" />
+<button class="Clear-Button action-button @userButton" @onclick="ShowUser">User Manager</button>
 
-<button class="Clear-Button action-button" @onclick="RemoveRole">Remove role</button>
-<input @bind="roleToDelete" placeholder="Role name" />
+<div class="@roleContainer">
+    <h2>Role manager</h2>
+    <button class="Clear-Button action-button @newRoleState" @onclick="AddRole">Add role</button>
+    <input @bind="newRoleName" placeholder="Role name" />
 
-@if (users.Count == 0)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
-                <th scope="col">Password</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in users)
-            {
+    <button class="Clear-Button action-button @roleDeleteState" @onclick="RemoveRole">Remove role</button>
+    <input @bind="roleToDelete" placeholder="Role name" />
+
+    <button class="Clear-Button action-button @assignState" @onclick="AssignRoleToUser">Assign role to user</button>
+    <input @bind="username" placeholder="Username" />
+    <input @bind="roleName" placeholder="Role name" />
+
+    <br>
+    <button class="Clear-Button action-button @unassignState" @onclick="UnassignRoleToUser">UnAssign role to user</button>
+    <input @bind="usernameR" placeholder="Username" />
+    <input @bind="roleNameR" placeholder="Role name" />
+
+
+    @if (roles.Count != 0)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <th scope="row">@x.Id</th>
-                    <td>@x.UserName</td>
-                    <td>@x.Email</td>
-                    <td>@x.PasswordHash</td>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var x in roles)
+                {
+                    <tr>
+                        <th scope="row">@x.Id</th>
+                        <td>@x.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
 
+    @if (users.Count == 0)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (DisplayUsers.Count != 0)
+                {
+                    @foreach (var x in DisplayUsers)
+                    {
+                        <tr>
+                            <th scope="row">@x.Id</th>
+                            <td>@x.UserName</td>
+                            <td>@x.Email</td>
+                            <td>
+                                @foreach (var z in x.Roles)
+                                {
+                                    <p>@z</p>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <p>Loading...</p>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="@userContainer">
+    @if (users.Count == 0)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Roles</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (DisplayUsers.Count != 0)
+                {
+                    @foreach (var x in DisplayUsers)
+                    {
+                        <tr>
+                            <th scope="row">@x.Id</th>
+                            <td>@x.UserName</td>
+                            <td>@x.Email</td>
+                            <td>
+                                @foreach (var z in x.Roles)
+                                {
+                                    <p>@z</p>
+                                }
+                            </td>
+                            <td><button class="Clear-Button action-button" @onclick="(async () => await RemoveUser(x.Id))">Delete</button></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <p>Loading...</p>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
 @code {
-    string name = "";
-    string state = "";
+
+    //Role Manager
+    string roleContainer = "hidden-state";
+    string roleButton = "";
+
+    string newRoleName = "";
+    string newRoleState = "";
+
+    string roleToDelete;
+    string roleDeleteState = "";
 
     string username;
     string roleName;
+    string assignState = "";
 
-    string roleToDelete;
+    string usernameR;
+    string roleNameR;
+    string unassignState = "";
 
+    //User Manager
+    string userContainer = "hidden-state";
+    string userButton = "";
+
+    List<DisplayUser> DisplayUsers;
     List<IdentityUser> users;
-
-
-    string debugFeedback = "";
+    List<IdentityRole> roles;
 
     protected async override Task OnInitializedAsync()
     {
         users = await admin.GetUsers();
+        roles = await admin.GetRoles();
+
+        //For some reason instant assignment doesnt work?
+        DisplayUsers = new List<DisplayUser>();
+        DisplayUsers = await admin.CreateDisplayUsers(users);
+    }
+
+    void ShowRole()
+    {
+        if (string.IsNullOrEmpty(roleContainer))
+        {
+            roleContainer = "hidden-state";
+            roleButton = "";
+        }
+        else
+        {
+            roleContainer = "";
+            roleButton = "isActive";
+        }
+    }
+
+    void ShowUser()
+    {
+        {
+            if (string.IsNullOrEmpty(userContainer))
+            {
+                userContainer = "hidden-state";
+                userButton = "";
+            }
+            else
+            {
+                userContainer = "";
+                userButton = "isActive";
+            }
+        }
     }
 
     async Task AddRole()
     {
-        try
-        {
-            await admin.Create(name);
 
-            await Task.Run(async () =>
-            {
-                state = "green";
-                await InvokeAsync(StateHasChanged);
-                await Task.Delay(3000);
-                state = "";
-                await InvokeAsync(StateHasChanged);
-            });
-        }
-        catch
+        await Task.Run(async () =>
         {
-            await Task.Run(async () =>
+            try
             {
-                state = "red";
+                await admin.CreateRole(newRoleName);
+
+            //Refresh Table
+            roles = await admin.GetRoles();
+
+                newRoleState = "green";
                 await InvokeAsync(StateHasChanged);
-                await Task.Delay(3000);
-                state = "";
+
+                await Task.Delay(1500);
+
+                newRoleState = "";
                 await InvokeAsync(StateHasChanged);
-            });
-        }
+            }
+            catch
+            {
+                newRoleState = "red";
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                newRoleState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+        });
     }
 
-    async Task ApplyRoleToUser()
+    async Task AssignRoleToUser()
     {
-        await admin.AddRole(roleName, username);
+        await Task.Run(async () =>
+        {
+            try
+            {
+                await admin.AssignRole(roleName, username);
+
+                assignState = "green";
+
+            //Refresh Table
+            users = await admin.GetUsers();
+                roles = await admin.GetRoles();
+                DisplayUsers = await admin.CreateDisplayUsers(users);
+
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                assignState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+            catch
+            {
+                assignState = "red";
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                assignState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+        });
+    }
+
+    async Task UnassignRoleToUser()
+    {
+        await Task.Run(async () =>
+        {
+            try
+            {
+                await admin.UnAssignRole(roleName, username);
+
+                unassignState = "green";
+
+            //Refresh Table
+            users = await admin.GetUsers();
+                roles = await admin.GetRoles();
+                DisplayUsers = await admin.CreateDisplayUsers(users);
+
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                unassignState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+            catch
+            {
+                unassignState = "red";
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                unassignState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+        });
     }
 
     async Task RemoveRole()
     {
-        await admin.RemoveRole(roleToDelete);
+        await Task.Run(async () =>
+        {
+            try
+            {
+                await admin.RemoveRole(roleToDelete);
+
+            //Refresh Table
+            users = await admin.GetUsers();
+                roles = await admin.GetRoles();
+                DisplayUsers = await admin.CreateDisplayUsers(users);
+
+                roleDeleteState = "green";
+                roles = await admin.GetRoles();
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                roleDeleteState = "";
+                await InvokeAsync(StateHasChanged);
+            }
+            catch
+            {
+                roleDeleteState = "red";
+                await InvokeAsync(StateHasChanged);
+
+                await Task.Delay(1500);
+
+                roleDeleteState = "";
+                await InvokeAsync(StateHasChanged);
+                base.StateHasChanged();
+            }
+        });
+    }
+
+    async Task RemoveUser(string id)
+    {
+        await admin.RemoveUser(id);
+        users = await admin.GetUsers();
+        roles = await admin.GetRoles();
+        DisplayUsers = await admin.CreateDisplayUsers(users);
+        StateHasChanged();
     }
 
 }

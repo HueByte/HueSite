@@ -2,7 +2,7 @@
 @using System.Threading;
 @layout MenuLayout
 
-<AuthorizeView>
+<AuthorizeView Roles="admin, user">
     <Authorized>
         <div class="Menubody">
             <div class="GridContainer">

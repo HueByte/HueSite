@@ -1,4 +1,5 @@
 ﻿using HueSite.Data.IServices;
+using HueSite.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +20,7 @@ namespace HueSite.Data.Services
             roleManager = _roleManager;
         }
 
-        public async Task Create(string name)
+        public async Task CreateRole(string name)
         {
             bool isExist = await roleManager.RoleExistsAsync(name);
             if (!isExist)
@@ -30,10 +31,16 @@ namespace HueSite.Data.Services
             }
         }
 
-        public async Task AddRole(string role, string username)
+        public async Task AssignRole(string role, string username)
         {
             IdentityUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as IdentityUser;
             var result = await userManager.AddToRoleAsync(user, role);
+        }
+
+        public async Task UnAssignRole(string role, string username)
+        {
+            IdentityUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as IdentityUser;
+            var result = await userManager.RemoveFromRoleAsync(user, role);
         }
 
         public async Task RemoveRole(string roleName)
@@ -46,23 +53,39 @@ namespace HueSite.Data.Services
             }
         }
 
+        public async Task<List<IdentityRole>> GetRoles()
+        {
+            return roleManager.Roles.ToList();
+        }
+
         public async Task<List<IdentityUser>> GetUsers()
         {
-            List<IdentityUser> ColUsers = new List<IdentityUser>();
-            // get users from _UserManager
-            var user = userManager.Users.Select(x => new IdentityUser
+            return userManager.Users.ToList();
+        }
+
+        public async Task<List<DisplayUser>> CreateDisplayUsers(List<IdentityUser> users)
+        {
+            List<DisplayUser> Display = new List<DisplayUser>();
+            foreach (var x in users)
             {
-                Id = x.Id,
-                UserName = x.UserName,
-                Email = x.Email,
-                PasswordHash = "*****"
-            });
-            foreach (var item in user)
-            {
-                ColUsers.Add(item);
+                var roles = await userManager.GetRolesAsync(x);
+                Display.Add(new DisplayUser
+                {
+                    Email = x.Email,
+                    Id = x.Id,
+                    UserName = x.UserName,
+                    Roles = roles
+                });
             }
 
-            return ColUsers;
+            return Display;
+        }
+
+        public async Task RemoveUser(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            await userManager.DeleteAsync(user);
         }
     }
+
 }

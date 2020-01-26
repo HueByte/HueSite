@@ -36,5 +36,10 @@
 
     .action-button:hover {
         transform: scale(1.05);
+        background-color: deeppink;
     }
 
+.hidden-state
+{
+    display: none;
+}

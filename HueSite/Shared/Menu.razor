@@ -13,7 +13,7 @@
         <div @onclick="(() => nav.NavigateTo(AdminPage))"><div class="item"><i class="fa fa-code"></i> Admin panel</div></div>
     </Authorized>
 </AuthorizeView>
-<div class="item"><i class="fa fa-code"></i> item</div>
+<div class="item"  @onclick="(() => nav.NavigateTo(Sorting))"><i class="fa fa-code"></i> Sorting Algorithms</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
@@ -24,4 +24,5 @@
 @code {
     string Homepage = "/";
     string AdminPage = "/admin";
+    string Sorting = "/sortingalgorithms";
 }

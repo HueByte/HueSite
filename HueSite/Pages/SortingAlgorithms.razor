@@ -1,0 +1,23 @@
+﻿@using HueSite.Data.IServices.ISortingAlg
+@inject ISorting sort
+
+@page "/sortingalgorithms"
+
+<h3>SortingAlgorithms</h3>
+
+@foreach (var x in test)
+{
+    <p>@x</p>
+}
+
+
+@code {
+
+    int[] x = { 1, 0, 2, 9, 3, 8, 4, 7, 5, 6 };
+    int[] test;
+
+    protected override async Task OnInitializedAsync()
+    {
+        test = sort.BubbleSort(x);
+    }
+}

@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Identity;
 using HueSite.Areas.Identity;
 using HueSite.Data.Services;
 using HueSite.Data.IServices;
+using HueSite.Data.IServices.ISortingAlg;
+using HueSite.Data.Services.SortingAlg;
 
 namespace HueSite
 {
@@ -33,6 +35,9 @@ namespace HueSite
             services.AddBlazoredSessionStorage();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<IAdmin, Admin>();
+
+            //Sorting algs
+            services.AddScoped<ISorting, Sorting>();
         }
         
         public void ConfigureContext()

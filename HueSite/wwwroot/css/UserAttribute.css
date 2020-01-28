@@ -1,0 +1,51 @@
+﻿.user-container {
+    display: block;
+    position: relative;
+    height: 20%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    padding: 10px;
+    right: 0;
+    top: 1em;
+    background-color: #000;
+    transform: translateX(100%);
+    transition: 0.5s;
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+}
+
+    .user-container.NoCollapse {
+        transform: translateX(0%);
+    }
+
+.user-button {
+    position: fixed;
+    right: 5px;
+    top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2em;
+    width: 2em;
+    background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+    .user-button:hover {
+        transform: scale(1.2);
+    }
+
+.user-button-closer {
+    position: relative;
+    margin: auto auto 10px 0px;
+}
+
+.pointer
+{
+    cursor: pointer;
+}

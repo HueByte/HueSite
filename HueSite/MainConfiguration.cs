@@ -16,6 +16,8 @@ using HueSite.Data.Services;
 using HueSite.Data.IServices;
 using HueSite.Data.IServices.ISortingAlg;
 using HueSite.Data.Services.SortingAlg;
+using HueSite.Areas.Identity.Data;
+using HueSite.Data.Models;
 
 namespace HueSite
 {
@@ -31,9 +33,14 @@ namespace HueSite
 
         public void ConfigureCustomServices()
         {
-            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
+            services.AddDefaultIdentity<AppUser>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = false;
+                config.User.RequireUniqueEmail = true;
+            }).AddRoles<IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
+
             services.AddBlazoredSessionStorage();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddScoped<IAdmin, Admin>();
 
             //Sorting algs

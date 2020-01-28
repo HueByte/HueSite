@@ -1,0 +1,31 @@
+﻿@using HueSite.Data.IServices
+@using Microsoft.AspNetCore.Identity;
+@using HueSite.Data.Models
+@inject UserManager<AppUser> userManager
+
+<AuthorizeView>
+    <Authorized>
+        @if (user != null)
+        {
+            @user.Nickname
+            @user.Email
+        }
+        else
+        {
+            <p>Loading...</p>
+        }
+    </Authorized>
+</AuthorizeView>
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+    AppUser user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationState;
+        var preUser = authState.User;
+        user = await userManager.FindByNameAsync(preUser.Identity.Name);
+    }
+
+}

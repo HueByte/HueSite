@@ -16,7 +16,7 @@
             <div class="user-container @isCollapsedUser">
                 <div class="user-button-closer" ><i class="fa fa-close pointer" @onclick="UserToogle"></i></div>
 
-                <p>@context.User.Identity.Name</p>
+                <UserComponent />
                 
             </div>
             <div class="user-button" @onclick="UserToogle"><i class="fa fa-user"></i></div>

@@ -1,4 +1,5 @@
-﻿using HueSite.Data.Models;
+﻿using HueSite.Areas.Identity.Data;
+using HueSite.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace HueSite.Data.IServices
         Task CreateRole(string name);
         Task AssignRole(string role, string username);
         Task UnAssignRole(string role, string username);
-        Task<List<IdentityUser>> GetUsers();
+        Task<List<AppUser>> GetUsers();
         Task RemoveRole(string roleName);
         Task<List<IdentityRole>> GetRoles();
-        Task<List<DisplayUser>> CreateDisplayUsers(List<IdentityUser> users);
+        Task<List<DisplayUser>> CreateDisplayUsers(List<AppUser> users);
         Task RemoveUser(string id);
     }
 }

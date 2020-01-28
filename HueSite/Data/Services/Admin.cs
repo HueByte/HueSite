@@ -1,4 +1,5 @@
-﻿using HueSite.Data.IServices;
+﻿using HueSite.Areas.Identity.Data;
+using HueSite.Data.IServices;
 using HueSite.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,9 @@ namespace HueSite.Data.Services
     public class Admin : IAdmin
     {
 
-        UserManager<IdentityUser> userManager;
+        UserManager<AppUser> userManager;
         RoleManager<IdentityRole> roleManager;
-        public Admin(UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager)
+        public Admin(UserManager<AppUser> _userManager, RoleManager<IdentityRole> _roleManager)
         {
             userManager = _userManager;
             roleManager = _roleManager;
@@ -33,13 +34,13 @@ namespace HueSite.Data.Services
 
         public async Task AssignRole(string role, string username)
         {
-            IdentityUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as IdentityUser;
+            AppUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as AppUser;
             var result = await userManager.AddToRoleAsync(user, role);
         }
 
         public async Task UnAssignRole(string role, string username)
         {
-            IdentityUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as IdentityUser;
+            AppUser user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == username) as AppUser;
             var result = await userManager.RemoveFromRoleAsync(user, role);
         }
 
@@ -58,12 +59,12 @@ namespace HueSite.Data.Services
             return roleManager.Roles.ToList();
         }
 
-        public async Task<List<IdentityUser>> GetUsers()
+        public async Task<List<AppUser>> GetUsers()
         {
             return userManager.Users.ToList();
         }
 
-        public async Task<List<DisplayUser>> CreateDisplayUsers(List<IdentityUser> users)
+        public async Task<List<DisplayUser>> CreateDisplayUsers(List<AppUser> users)
         {
             List<DisplayUser> Display = new List<DisplayUser>();
             foreach (var x in users)

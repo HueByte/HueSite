@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using HueSite.Data.Models
 @inject IAdmin admin
-@inject UserManager<IdentityUser> userManager
+@inject UserManager<AppUser> userManager
 @attribute [Authorize(Roles = "admin")]
 
 <div style="width: 100%; text-align: center;">
@@ -16,20 +16,28 @@
 
 <div class="@roleContainer">
     <h2>Role manager</h2>
-    <button class="Clear-Button action-button @newRoleState" @onclick="AddRole">Add role</button>
-    <input @bind="newRoleName" placeholder="Role name" />
 
-    <button class="Clear-Button action-button @roleDeleteState" @onclick="RemoveRole">Remove role</button>
-    <input @bind="roleToDelete" placeholder="Role name" />
+    <div>
+        <button class="Clear-Button action-button @newRoleState" @onclick="AddRole">Add role</button>
+        <input @bind="newRoleName" placeholder="Role name" />
+    </div>
 
-    <button class="Clear-Button action-button @assignState" @onclick="AssignRoleToUser">Assign role to user</button>
-    <input @bind="username" placeholder="Username" />
-    <input @bind="roleName" placeholder="Role name" />
+    <div>
+        <button class="Clear-Button action-button @roleDeleteState" @onclick="RemoveRole">Remove role</button>
+        <input @bind="roleToDelete" placeholder="Role name" />
+    </div>
 
-    <br>
-    <button class="Clear-Button action-button @unassignState" @onclick="UnassignRoleToUser">UnAssign role to user</button>
-    <input @bind="usernameR" placeholder="Username" />
-    <input @bind="roleNameR" placeholder="Role name" />
+    <div>
+        <button class="Clear-Button action-button @assignState" @onclick="AssignRoleToUser">Assign role to user</button>
+        <input @bind="username" placeholder="Username" />
+        <input @bind="roleName" placeholder="Role name" />
+    </div>
+
+    <div>
+        <button class="Clear-Button action-button @unassignState" @onclick="UnassignRoleToUser">Unassign role to user</button>
+        <input @bind="usernameR" placeholder="Username" />
+        <input @bind="roleNameR" placeholder="Role name" />
+    </div>
 
 
     @if (roles.Count != 0)
@@ -169,7 +177,7 @@
     string userButton = "";
 
     List<DisplayUser> DisplayUsers;
-    List<IdentityUser> users;
+    List<AppUser> users;
     List<IdentityRole> roles;
 
     protected async override Task OnInitializedAsync()

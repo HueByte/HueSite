@@ -57,6 +57,7 @@
         if (SecretCode == "1010")
         {
             var result = await userManager.AddToRoleAsync(user, "scu");
+            await InvokeAsync(StateHasChanged);
             navManager.NavigateTo("/");
         }
         else

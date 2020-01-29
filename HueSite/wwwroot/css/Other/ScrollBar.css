@@ -7,9 +7,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #008b9c;
+    background-color: #21FA90;
 }
 
     ::-webkit-scrollbar-thumb:hover {
-        background-color: #6200ff;
+        background-color: #FF4365;
     }

@@ -18,6 +18,7 @@ using HueSite.Data.IServices.ISortingAlg;
 using HueSite.Data.Services.SortingAlg;
 using HueSite.Areas.Identity.Data;
 using HueSite.Data.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace HueSite
 {
@@ -35,13 +36,16 @@ namespace HueSite
         {
             services.AddDefaultIdentity<AppUser>(config =>
             {
-                config.SignIn.RequireConfirmedEmail = false;
+                config.SignIn.RequireConfirmedEmail = true;
                 config.User.RequireUniqueEmail = true;
+                config.SignIn.RequireConfirmedAccount = true;
             }).AddRoles<IdentityRole>().AddEntityFrameworkStores<DatabaseContext>();
 
             services.AddBlazoredSessionStorage();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<AppUser>>();
             services.AddScoped<IAdmin, Admin>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<EmailSettings>(conf.GetSection("EmailSettings"));
 
             //Sorting algs
             services.AddScoped<ISorting, Sorting>();

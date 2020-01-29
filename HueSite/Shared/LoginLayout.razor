@@ -1,17 +1,75 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager
+@inject NavigationManager navManager
 
 <div class="AuthBody">
+    <AuthorizeView>
+        <Authorized>
+            <div class="AuthTiles">
+                @context.User.Identity.Name you're not authorized to this website right now, contact administrator for more information or use secret code
+                <form method="post" action="Identity/Account/Logout">
+                    <button type="submit" class="btn item item-whitebg" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
+                </form>
+            </div>
+            <div class="AuthTiles">
+                <div class="Clear-Button action-button @state" @onclick="CheckCode">Run: </div>
+                <input @bind="SecretCode" placeholder="SecretCode" />
+            </div>
+        </Authorized>
+        <NotAuthorized>
 
-    <a href="Identity/Account/Register">
-        <div class="AuthTiles">Register</div>
-    </a>
+            <a href="Identity/Account/Register">
+                <div class="AuthTiles">Register</div>
+            </a>
 
-    <a href="Identity/Account/Login">
-        <div class="AuthTiles">Log in</div>
-    </a>
+            <a href="Identity/Account/Login">
+                <div class="AuthTiles">Log in</div>
+            </a>
 
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthState { get; set; }
+    string SecretCode = "";
+    string state = "";
+    AppUser user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var auth = await AuthState;
+            var preUser = auth.User;
+            user = await userManager.FindByNameAsync(preUser.Identity.Name);
+        }
+        catch
+        {
+
+        }
+    }
+
+    async Task CheckCode()
+    {
+        if (SecretCode == "1010")
+        {
+            var result = await userManager.AddToRoleAsync(user, "scu");
+            navManager.NavigateTo("/");
+        }
+        else
+        {
+            await Task.Run(async () =>
+            {
+                state = "red";
+                await Task.Delay(1500);
+                await InvokeAsync(StateHasChanged);
+                state = "";
+            });
+
+        }
+    }
 
 }

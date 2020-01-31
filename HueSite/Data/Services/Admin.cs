@@ -54,11 +54,13 @@ namespace HueSite.Data.Services
             }
         }
 
+        //TODO
         public async Task<List<IdentityRole>> GetRoles()
         {
             return roleManager.Roles.ToList();
         }
 
+        //TODO
         public async Task<List<AppUser>> GetUsers()
         {
             return userManager.Users.ToList();

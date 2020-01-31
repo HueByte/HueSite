@@ -8,25 +8,11 @@
         <div class="button-closer" @onclick="Toggle"><i class="fa fa-close"></i></div>
         <Menu />
     </div>
+    <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
 
-
-    <AuthorizeView>
-        <Authorized>
-            <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
-            <div class="user-container @isCollapsedUser">
-                <div class="user-button-closer" ><i class="fa fa-close pointer" @onclick="UserToogle"></i></div>
-
-                <UserComponent />
-                
-            </div>
-            <div class="user-button" @onclick="UserToogle"><i class="fa fa-user"></i></div>
-        </Authorized>
-    </AuthorizeView>
+    <UserComponent />
 
     <div class="main-container">
-        <!--<div class="menu">
-            <Menu />
-        </div>-->
         <main class="main-content">
             @Body
         </main>
@@ -38,18 +24,9 @@
     bool collapse = true;
     string isCollapsed = "";
 
-    bool collapseUser = true;
-    string isCollapsedUser = "";
-
     void Toggle()
     {
         collapse = !collapse;
         isCollapsed = collapse ? "" : "NoCollapse";
-    }
-
-    void UserToogle()
-    {
-        collapseUser = !collapseUser;
-        isCollapsedUser = collapseUser ? "" : "NoCollapse";
     }
 }

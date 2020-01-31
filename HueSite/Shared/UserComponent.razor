@@ -1,34 +1,58 @@
 ﻿@using HueSite.Data.IServices
 @using Microsoft.AspNetCore.Identity;
+@using HueSite.Data
 @using HueSite.Data.Models
+@using Microsoft.EntityFrameworkCore
 @inject UserManager<AppUser> userManager
+
+
 
 <AuthorizeView>
     <Authorized>
-        @if (user != null)
-        {
-            @user.Nickname
-            @user.Email
-        }
-        else
-        {
-            <p>Loading...</p>
-        }
-        <form method="post" action="Identity/Account/Logout">
-            <button type="submit" class="btn item" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
-        </form>
+        <div class="user-container @isCollapsedUser">
+            <div class="user-button-closer"><i class="fa fa-close pointer" @onclick="UserToggle"></i></div>
+
+            @if (user != null)
+            {
+                @user.Nickname
+                @user.Email
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
+            <form method="post" action="Identity/Account/Logout">
+                <button type="submit" class="btn item" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
+            </form>
+
+        </div>
+        <div class="user-button" @onclick="UserToggle"><i class="fa fa-user"></i></div>
     </Authorized>
 </AuthorizeView>
+
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationState { get; set; }
+    private DatabaseContext context = new DatabaseContext(new DbContextOptions<DatabaseContext>());
     AppUser user;
 
-    protected override async Task OnInitializedAsync()
+    bool collapseUser = true;
+    bool FirstDownloadUser = true;
+    string isCollapsedUser = "";
+
+    async Task UserToggle()
     {
-        var authState = await authenticationState;
-        var preUser = authState.User;
-        user = await userManager.FindByNameAsync(preUser.Identity.Name);
+        collapseUser = !collapseUser;
+        isCollapsedUser = collapseUser ? "" : "NoCollapse";
+
+        if (FirstDownloadUser)
+        {
+            FirstDownloadUser = !FirstDownloadUser;
+            var authState = await authenticationState;
+            var preUser = authState.User;
+            user = await userManager.FindByNameAsync(preUser.Identity.Name);
+            StateHasChanged();
+        }
     }
 
 }

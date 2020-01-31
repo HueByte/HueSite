@@ -53,7 +53,9 @@ namespace HueSite
         
         public void ConfigureContext()
         {
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(conf.GetConnectionString("HueDatabase")));
+            services.AddDbContext<DatabaseContext>(options => 
+            options.UseSqlServer(conf.GetConnectionString("HueDatabase")), 
+            ServiceLifetime.Transient);
         }
     }
 }

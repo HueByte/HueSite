@@ -14,17 +14,26 @@
 
             @if (user != null)
             {
-                @user.Nickname
-                @user.Email
+                <div class="user-container-item-container">
+                    <div class="user-container-item user">
+                        @user.Nickname
+                        @user.Email
+                    </div>
+                    <form method="post" action="Identity/Account/Logout">
+                        <button type="submit" class="btn user-container-item" style="text-align: left;width: 100%;"><i class="fas fa-sign-out-alt"></i> Log out</button>
+                    </form>
+                    <NavLink href="Identity/Account/Manage">
+                        <div class="user-container-item">
+                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                            Manage
+                        </div>
+                    </NavLink>
+                </div>
             }
             else
             {
                 <p>Loading...</p>
             }
-            <form method="post" action="Identity/Account/Logout">
-                <button type="submit" class="btn item" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
-            </form>
-
         </div>
         <div class="user-button" @onclick="UserToggle"><i class="fa fa-user"></i></div>
     </Authorized>
@@ -33,7 +42,6 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationState { get; set; }
-    private DatabaseContext context = new DatabaseContext(new DbContextOptions<DatabaseContext>());
     AppUser user;
 
     bool collapseUser = true;

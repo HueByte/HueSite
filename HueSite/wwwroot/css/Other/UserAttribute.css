@@ -1,7 +1,7 @@
 ﻿.user-container {
     display: block;
     position: relative;
-    height: 20%;
+    min-height: 150px;
     width: 250px;
     position: fixed;
     z-index: 1;
@@ -16,10 +16,37 @@
     border-bottom-left-radius: 20px;
     overflow: hidden;
 }
-
     .user-container.NoCollapse {
         transform: translateX(0%);
     }
+
+.user-container-item-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-container-item
+{
+    margin-bottom: 1em;
+    padding: 5px;
+    background-color: #21FA90;
+    border-radius: 10px;
+    transition: 0.5s;
+    color: black;
+    cursor: pointer;
+}
+.user-container-item:hover {
+    background-color: #FF4365;
+}
+
+    .user-container-item.user {
+        background-color: #FFFFF3;
+        cursor: auto;
+    }
+
+        .user-container-item.user:hover {
+            background-color: #FFFFF3;
+        }
 
 .user-button {
     position: fixed;
@@ -42,7 +69,10 @@
 
 .user-button-closer {
     position: relative;
-    margin: auto auto 10px 0px;
+    left: 10px;
+    top: 10px;
+    margin-bottom: 15px;
+    
 }
 
 .pointer

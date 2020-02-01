@@ -1,19 +1,13 @@
 ﻿@inject NavigationManager nav
 
-<div @onclick="(() => nav.NavigateTo(Homepage))"><div class="item" style="margin-top: 30px;"><i class="fa fa-fw fa-home"></i> Homepage</div></div>
-<AuthorizeView>
-    <Authorized>
-        <form method="post" action="Identity/Account/Logout">
-            <button type="submit" class="btn item" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
-        </form>
-    </Authorized>
-</AuthorizeView>
+<!--<div @onclick="(() => nav.NavigateTo(Homepage))"><div class="item" style="margin-top: 30px;"><i class="fa fa-fw fa-home"></i> Homepage</div></div>-->
+<NavLink href="/"><div class="item" style="margin-top: 30px;"><i class="fas fa-fire"></i> Homepage</div></NavLink>
 <AuthorizeView Roles="admin">
     <Authorized>
-        <div @onclick="(() => nav.NavigateTo(AdminPage))"><div class="item"><i class="fa fa-code"></i> Admin panel</div></div>
+        <NavLink href="/admin"><div class="item"><i class="fas fa-code-branch"></i> Admin panel</div></NavLink>
     </Authorized>
 </AuthorizeView>
-<div class="item"  @onclick="(() => nav.NavigateTo(Sorting))"><i class="fa fa-code"></i> Sorting Algorithms</div>
+<NavLink href="/sortingalgorithms"><div class="item"><i class="fas fa-filter"></i> Sorting Algorithms</div></NavLink>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
@@ -22,7 +16,5 @@
 
 
 @code {
-    string Homepage = "/";
-    string AdminPage = "/admin";
-    string Sorting = "/sortingalgorithms";
+
 }

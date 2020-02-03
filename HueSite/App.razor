@@ -20,7 +20,13 @@
             <AuthorizeView Roles="admin, user, scu">
                 <Authorized>
                     <LayoutView Layout="@typeof(MainLayout)">
-                        <p>Sorry, there's nothing at this address.</p>
+                        <!--Page not found-->
+                        <div class="not-found-icon">
+                            <img src="/icons/NotFound.jpg" alt="that shouldn't happen!" class="not-found-icon-child"/>
+                        </div>
+                        <div class="not-found-text">
+                            <h2>Sorry, there's nothing at this address</h2>
+                        </div>
                     </LayoutView>
                 </Authorized>
                 <NotAuthorized>

@@ -275,7 +275,7 @@
                 assignState = "";
                 await InvokeAsync(StateHasChanged);
             }
-            catch
+            catch 
             {
                 assignState = "red";
                 await InvokeAsync(StateHasChanged);
@@ -294,7 +294,7 @@
         {
             try
             {
-                await admin.UnAssignRole(roleName, username);
+                await admin.UnAssignRole(roleNameR, usernameR);
 
                 unassignState = "green";
 
@@ -310,7 +310,7 @@
                 unassignState = "";
                 await InvokeAsync(StateHasChanged);
             }
-            catch
+            catch 
             {
                 unassignState = "red";
                 await InvokeAsync(StateHasChanged);

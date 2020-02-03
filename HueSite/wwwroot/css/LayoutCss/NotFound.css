@@ -1,0 +1,27 @@
+﻿.not-found-icon {
+    text-align: center;
+    margin-bottom: 3vh;
+}
+
+.not-found-icon-child {
+    border-radius: 50px;
+    width: 30vw;
+}
+
+.not-found-text {
+    text-align: center;
+}
+
+    .not-found-text > * {
+        font-size: 3em;
+    }
+
+@media screen and (max-width: 550px) {
+    .not-found-icon-child {
+        width: 50vw;
+    }
+
+    .not-found-text > * {
+        font-size: 10vw;
+    }
+}

@@ -130,6 +130,10 @@
     cursor: pointer;
 }
 
+.current-item{
+    background-color: #FF4365;
+}
+
     .item:hover {
         background-color: white;
         color: black;
@@ -144,3 +148,15 @@
     .item-whitebg:hover {
         color: black;
     }
+
+@media screen and (max-width: 550px) {
+
+    .main-container{
+        width: 100vw;
+    }
+
+    .button-expander{
+        background-color: #030301;
+        color: white;
+    }
+}

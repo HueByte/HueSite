@@ -1,0 +1,75 @@
+﻿@page "/mail"
+<!DOCTYPE HTML >
+<html>
+<head>
+
+</head>
+<body>
+    <style>
+        .mail-container {
+            width: 500px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #cc3380;
+            margin-bottom: 1rem;
+        }
+
+        .header-text {
+            font-weight: bold;
+            color: #33cccc;
+            font-size: 16px;
+        }
+
+        .text {
+            font-size: 14px;
+        }
+
+        .mail-button {
+            border-radius: 15px;
+            margin: auto;
+            padding-top: 18px;
+            height: 60px;
+            width: 120px;
+            background-color: #cc3380;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            transition: 0.5s;
+        }
+
+            .mail-button:hover {
+                background-color: #33cccc;
+                color: aliceblue;
+            }
+    </style>
+
+    <div class="mail-container">
+        <div class="header">
+            <p class="header-text">
+                Hello! Thanks for registering at HueSite!
+            </p>
+        </div>
+        <div class="text">
+            <p>
+                This message is auto-generated so responding to it isn't needed
+                Your verification link is here:
+            </p>
+        </div>
+        <a href="">
+            <div class="mail-button">
+                Activation Link
+            </div>
+        </a>
+        <div style="text-align:center;">
+            <img src="/icons/program1.png" alt="icon" />
+        </div>
+    </div>
+</body>
+</html>
+
+
+@code {
+
+}

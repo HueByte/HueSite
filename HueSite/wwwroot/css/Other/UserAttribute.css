@@ -79,3 +79,12 @@
 {
     cursor: pointer;
 }
+
+
+@media screen and (max-width: 550px) {
+
+    .user-button {
+        background-color: #030301;
+        color: white;
+    }
+}

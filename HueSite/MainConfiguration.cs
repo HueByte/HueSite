@@ -46,6 +46,7 @@ namespace HueSite
             services.AddScoped<IAdmin, Admin>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<EmailSettings>(conf.GetSection("EmailSettings"));
+            services.AddTransient<IGenerateEmail, GenerateEmail>();
 
             //Sorting algs
             services.AddScoped<ISorting, Sorting>();

@@ -1,0 +1,41 @@
+﻿@page "/zone"
+@using Microsoft.AspNetCore.Identity
+@using HueSite.Data.Models
+@inject UserManager<AppUser> userManager
+
+<h3>Zone</h3>
+<button class="Clear-Button action-button" @onclick="CreateNote">Add test Note</button>
+
+@if (user != null)
+{
+    @if (user.Notes != null)
+    {
+        @foreach (var note in user.Notes)
+        {
+            <p>@note.Id</p>
+        }
+    }
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+    AppUser user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationState;
+        var preUser = authState.User;
+        user = await userManager.FindByNameAsync(preUser.Identity.Name);
+    }
+
+    async Task CreateNote()
+    {
+        if (user.Notes == null)
+            user.Notes = new List<Note>();
+        user.Notes.Add(new Note() { Name = "TestingNote" });
+        await userManager.UpdateAsync(user);
+        StateHasChanged();
+    }
+
+}

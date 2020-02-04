@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HueSite.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace HueSite.Areas.Identity.Data
         public byte[] Avatar { get; set; }
         [PersonalData]
         public string Nickname { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
     }
 }

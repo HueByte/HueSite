@@ -3,18 +3,22 @@
 @inject UserManager<AppUser> userManager
 @inject NavigationManager navManager
 
+
 <div class="AuthBody">
     <AuthorizeView>
         <Authorized>
-            <div class="AuthTiles">
-                @context.User.Identity.Name you're not authorized to this website right now, contact administrator for more information or use secret code
-                <form method="post" action="Identity/Account/Logout">
-                    <button type="submit" class="btn item item-whitebg" style="text-align: left;"><i class="fas fa-sign-out-alt"></i> Log out</button>
-                </form>
-            </div>
-            <div class="AuthTiles">
-                <div class="Clear-Button action-button @state" @onclick="CheckCode">Run: </div>
-                <input @bind="SecretCode" placeholder="SecretCode" />
+            <div class="authorize-pop-up @ClassState">@SecretState</div>
+            <div class="authorize-container">
+                <div class="authorize-text">
+                    @context.User.Identity.Name you're not authorized to this website right now, contact administrator for more information or use secret code
+                </div>
+                <div class="authorize-code">
+                    <form method="post" action="Identity/Account/Logout">
+                        <button type="submit" class="Clear-Button action-button authorize-buttons"><i class="fas fa-sign-out-alt"></i> Log out</button>
+                    </form>
+                    <button class="Clear-Button action-button authorize-buttons" @onclick="CheckCode">Check Code</button>
+                    <input class="input-blackbg" type="text" @bind="SecretCode" placeholder="SecretCode" />
+                </div>
             </div>
         </Authorized>
         <NotAuthorized>
@@ -35,7 +39,8 @@
     [CascadingParameter]
     private Task<AuthenticationState> AuthState { get; set; }
     string SecretCode = "";
-    string state = "";
+    string SecretState = "";
+    string ClassState = "";
     AppUser user;
 
     protected override async Task OnInitializedAsync()
@@ -46,28 +51,31 @@
             var preUser = auth.User;
             user = await userManager.FindByNameAsync(preUser.Identity.Name);
         }
-        catch
-        {
-
-        }
+        catch { }
     }
 
     async Task CheckCode()
     {
         if (SecretCode == "1010")
         {
-            var result = await userManager.AddToRoleAsync(user, "scu");
-            await InvokeAsync(StateHasChanged);
-            navManager.NavigateTo("/");
+            await Task.Run(async () =>
+            {
+                var result = await userManager.AddToRoleAsync(user, "scu");
+                SecretState = "Your role has been assigned! Please log in again";
+                ClassState = "Good";
+                await InvokeAsync(StateHasChanged);
+                navManager.NavigateTo("/");
+            });
         }
+
         else
         {
             await Task.Run(async () =>
             {
-                state = "red";
+                SecretState = "That code didn't work!";
+                ClassState = "Bad";
                 await Task.Delay(1500);
                 await InvokeAsync(StateHasChanged);
-                state = "";
             });
 
         }

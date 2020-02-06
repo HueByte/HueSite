@@ -1,0 +1,51 @@
+﻿.authorize-container {
+    width: 50vw;
+    padding: 20px;
+}
+
+.authorize-text {
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid #cc3380;
+    margin-bottom: 1rem;
+}
+
+.authorize-code {
+    width: 100%;
+    text-align: center;
+}
+
+.authorize-buttons {
+    background-color: #21FA90 !important;
+    color: black !important;
+    width: 50% !important;
+}
+
+    .authorize-buttons:hover {
+        background-color: #cc3380 !important;
+    }
+
+.authorize-pop-up {
+    width: 250px;
+    color:white;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transform: translateX(100%);
+    position: relative;
+    transition: 0.5s;
+    height: 100px;
+    z-index: 1;
+    right: 0;
+    top: 1em;
+}
+
+    .authorize-pop-up.Good {
+        transform: translateX(0%);
+        background-color: #21FA90;
+    }
+
+    .authorize-pop-up.Bad {
+        transform: translateX(0%);
+        background-color: #cc3380;
+    }
+

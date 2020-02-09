@@ -1,6 +1,17 @@
 ﻿.authorize-container {
-    width: 50vw;
+    width: 30vw;
     padding: 20px;
+}
+
+.authorize-container-flex {
+    /*Position*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    /*Size*/
+    max-width: 30vw;
+    text-align: center;
 }
 
 .authorize-text {
@@ -15,10 +26,19 @@
     text-align: center;
 }
 
+.authorize-container-buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
 .authorize-buttons {
     background-color: #21FA90 !important;
     color: black !important;
     width: 50% !important;
+    font-weight: bold;
 }
 
     .authorize-buttons:hover {
@@ -26,17 +46,22 @@
     }
 
 .authorize-pop-up {
-    width: 250px;
-    color:white;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    transform: translateX(100%);
-    position: relative;
-    transition: 0.5s;
-    height: 100px;
+    /*Position*/
+    position: fixed;
     z-index: 1;
     right: 0;
-    top: 1em;
+    top: 3em;
+    /*Size*/
+    padding: 10px;
+    min-height: 50px;
+    min-width: 100px;
+    /*Transforming*/
+    transform: translateX(100%);
+    transition: 1s ease-in-out;
+    /*Design*/
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
     .authorize-pop-up.Good {
@@ -49,3 +74,29 @@
         background-color: #cc3380;
     }
 
+.authorize-pop-up-button-closer {
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+@media screen and (max-width: 1000px)
+{
+    .authorize-container {
+        width: 50vw;
+    }
+
+    .authorize-buttons {
+        width: 50% !important;
+    }
+}
+
+@media screen and (max-width: 510px)
+{
+    .authorize-container {
+        width: 80vw;
+    }
+    .authorize-buttons
+    {
+        width: 90% !important;
+    }
+}

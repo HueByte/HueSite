@@ -3,11 +3,14 @@
 @inject UserManager<AppUser> userManager
 @inject NavigationManager navManager
 
+<AuthorizeView>
+    <Authorized>
+        <div class="authorize-pop-up @ClassState">
+            <div class="authorize-pop-up-button-closer"><i class="fa fa-close pointer" @onclick="Toggle"></i></div>
+            @SecretState
+        </div>
 
-<div class="AuthBody">
-    <AuthorizeView>
-        <Authorized>
-            <div class="authorize-pop-up @ClassState">@SecretState</div>
+        <div class="AuthBody">
             <div class="authorize-container">
                 <div class="authorize-text">
                     @context.User.Identity.Name you're not authorized to this website right now, contact administrator for more information or use secret code
@@ -17,23 +20,30 @@
                         <button type="submit" class="Clear-Button action-button authorize-buttons"><i class="fas fa-sign-out-alt"></i> Log out</button>
                     </form>
                     <button class="Clear-Button action-button authorize-buttons" @onclick="CheckCode">Check Code</button>
-                    <input class="input-blackbg" type="text" @bind="SecretCode" placeholder="SecretCode" />
+                    <input class="input-blackbg" type="text" @bind="SecretCode" placeholder="Secret Code" style="margin-top: 1em;" />
                 </div>
             </div>
-        </Authorized>
-        <NotAuthorized>
+        </div>
+    </Authorized>
+    <NotAuthorized>
 
-            <a href="Identity/Account/Register">
-                <div class="AuthTiles">Register</div>
-            </a>
-
-            <a href="Identity/Account/Login">
-                <div class="AuthTiles">Log in</div>
-            </a>
-
-        </NotAuthorized>
-    </AuthorizeView>
-</div>
+        <div class="AuthBody">
+            <div class="authorize-container">
+                <div class="authorize-text">
+                    <h2 style="text-align: center;">Welcome to HueSite!</h2>
+                </div>
+                <div class="authorize-container-buttons">
+                    <NavLink href="Identity/Account/Login">
+                        <div class="Clear-Button action-button">Log in</div>
+                    </NavLink>
+                    <NavLink href="Identity/Account/Register">
+                        <div class="Clear-Button action-button">Register</div>
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     [CascadingParameter]
@@ -79,6 +89,11 @@
             });
 
         }
+    }
+
+    void Toggle()
+    {
+        ClassState = "";
     }
 
 }

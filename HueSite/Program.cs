@@ -23,8 +23,8 @@ namespace HueSite
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.UseKestrel();
-                    //webBuilder.UseUrls("http://192.168.0.170:5001;https://192.168.0.170:5002");
+                    webBuilder.UseKestrel();
+                    webBuilder.UseUrls("http://192.168.0.170:5001;https://192.168.0.170:5002");
                     //webBuilder.UseUrls("http://127.0.0.1:5001;https://127.0.0.1:5002");
                 });
     }

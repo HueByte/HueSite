@@ -64,6 +64,11 @@
     border-radius: 20px;
 }
 
+.main-content.dark {
+    background-color: #252525;
+    color: white;
+}
+
 /*#endregion */
 
 /*#region Main Slider menu */

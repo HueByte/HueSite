@@ -5,8 +5,6 @@
 @using Microsoft.EntityFrameworkCore
 @inject UserManager<AppUser> userManager
 
-
-
 <AuthorizeView>
     <Authorized>
         <div class="user-container @isCollapsedUser">
@@ -27,6 +25,10 @@
                             Manage
                         </div>
                     </NavLink>
+                    <div class="user-container-item" @onclick="ChangeTheme">
+                        <i class="fas fa-moon"></i>
+                        Theme
+                    </div>
                 </div>
             }
             else
@@ -39,9 +41,9 @@
 </AuthorizeView>
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationState { get; set; }
-    AppUser user;
+    [CascadingParameter] public AppUser user { get; set; }
+    [Parameter] public Action<bool> ThemeChanged { get; set; }
+    bool ThemeValue = false;
 
     bool collapseUser = true;
     bool FirstDownloadUser = true;
@@ -51,15 +53,14 @@
     {
         collapseUser = !collapseUser;
         isCollapsedUser = collapseUser ? "" : "NoCollapse";
+        if (user.SelectedTheme == "dark")
+            ThemeValue = true;
+    }
 
-        if (FirstDownloadUser)
-        {
-            FirstDownloadUser = !FirstDownloadUser;
-            var authState = await authenticationState;
-            var preUser = authState.User;
-            user = await userManager.FindByNameAsync(preUser.Identity.Name);
-            StateHasChanged();
-        }
+    void ChangeTheme()
+    {
+        ThemeValue = !ThemeValue;
+        ThemeChanged.Invoke(ThemeValue);
     }
 
 }

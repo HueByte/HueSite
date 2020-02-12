@@ -14,6 +14,8 @@
 
 <button class="Clear-Button action-button @userButton" @onclick="ShowUser">User Manager</button>
 
+@if (user != null)
+{
 <div class="@roleContainer">
     <h2>Role manager</h2>
 
@@ -40,9 +42,13 @@
     </div>
 
 
-    @if (roles.Count != 0)
+    @if (roles == null)
     {
-        <table class="table">
+        <p>Loading...</p>
+    }
+    else
+    {
+        <table class="table @user.SelectedTheme">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -60,18 +66,14 @@
             </tbody>
         </table>
     }
-    else
-    {
-        <p>Loading...</p>
-    }
 
-    @if (users.Count == 0)
+    @if (users == null)
     {
         <p>Loading...</p>
     }
     else
     {
-        <table class="table">
+        <table class="table @user.SelectedTheme">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -108,13 +110,13 @@
 </div>
 
 <div class="@userContainer">
-    @if (users.Count == 0)
+    @if (users == null)
     {
         <p>Loading...</p>
     }
     else
     {
-        <table class="table">
+        <table class="table @user.SelectedTheme">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -125,7 +127,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (DisplayUsers.Count != 0)
+                @if (DisplayUsers != null)
                 {
                     @foreach (var x in DisplayUsers)
                     {
@@ -151,8 +153,14 @@
         </table>
     }
 </div>
-
+}
+else
+{
+    <h2>Loading settings...</h2>
+}
 @code {
+    [CascadingParameter] AppUser user { get; set; }
+    string theme = "";
 
     //Role Manager
     string roleContainer = "hidden-state";
@@ -187,7 +195,7 @@
 
         //For some reason instant assignment doesnt work?
         DisplayUsers = new List<DisplayUser>();
-        DisplayUsers = await admin.CreateDisplayUsers(users);
+        DisplayUsers = await admin.CreateDisplayUsers();
     }
 
     void ShowRole()
@@ -229,8 +237,8 @@
             {
                 await admin.CreateRole(newRoleName);
 
-            //Refresh Table
-            roles = await admin.GetRoles();
+                //Refresh Table
+                roles = await admin.GetRoles();
 
                 newRoleState = "green";
                 await InvokeAsync(StateHasChanged);
@@ -263,10 +271,10 @@
 
                 assignState = "green";
 
-            //Refresh Table
-            users = await admin.GetUsers();
+                //Refresh Table
+                users = await admin.GetUsers();
                 roles = await admin.GetRoles();
-                DisplayUsers = await admin.CreateDisplayUsers(users);
+                DisplayUsers = await admin.CreateDisplayUsers();
 
                 await InvokeAsync(StateHasChanged);
 
@@ -275,7 +283,7 @@
                 assignState = "";
                 await InvokeAsync(StateHasChanged);
             }
-            catch 
+            catch
             {
                 assignState = "red";
                 await InvokeAsync(StateHasChanged);
@@ -298,10 +306,10 @@
 
                 unassignState = "green";
 
-            //Refresh Table
-            users = await admin.GetUsers();
+                //Refresh Table
+                users = await admin.GetUsers();
                 roles = await admin.GetRoles();
-                DisplayUsers = await admin.CreateDisplayUsers(users);
+                DisplayUsers = await admin.CreateDisplayUsers();
 
                 await InvokeAsync(StateHasChanged);
 
@@ -310,7 +318,7 @@
                 unassignState = "";
                 await InvokeAsync(StateHasChanged);
             }
-            catch 
+            catch
             {
                 unassignState = "red";
                 await InvokeAsync(StateHasChanged);
@@ -331,10 +339,10 @@
             {
                 await admin.RemoveRole(roleToDelete);
 
-            //Refresh Table
-            users = await admin.GetUsers();
+                //Refresh Table
+                users = await admin.GetUsers();
                 roles = await admin.GetRoles();
-                DisplayUsers = await admin.CreateDisplayUsers(users);
+                DisplayUsers = await admin.CreateDisplayUsers();
 
                 roleDeleteState = "green";
                 roles = await admin.GetRoles();
@@ -364,7 +372,7 @@
         await admin.RemoveUser(id);
         users = await admin.GetUsers();
         roles = await admin.GetRoles();
-        DisplayUsers = await admin.CreateDisplayUsers(users);
+        DisplayUsers = await admin.CreateDisplayUsers();
         StateHasChanged();
     }
 

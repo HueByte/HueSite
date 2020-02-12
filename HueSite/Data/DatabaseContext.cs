@@ -28,7 +28,7 @@ namespace HueSite.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseLazyLoadingProxies();
+            //options.UseLazyLoadingProxies();
         }
 
         //DbSets

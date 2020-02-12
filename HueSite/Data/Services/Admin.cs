@@ -66,8 +66,9 @@ namespace HueSite.Data.Services
             return userManager.Users.ToList();
         }
 
-        public async Task<List<DisplayUser>> CreateDisplayUsers(List<AppUser> users)
+        public async Task<List<DisplayUser>> CreateDisplayUsers()
         {
+            List<AppUser> users = await userManager.Users.ToListAsync();
             List<DisplayUser> Display = new List<DisplayUser>();
             foreach (var x in users)
             {

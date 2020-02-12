@@ -1,32 +1,76 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager nav
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@inject UserManager<AppUser> userManager
+@using HueSite.Data
 
-<div class="main-layout">
+<CascadingValue Value="@theme">
+    <CascadingValue Value="@user">
+        <div class="main-layout">
 
-    <div class="mobile-menu @isCollapsed">
-        <div class="button-closer" @onclick="Toggle"><i class="fa fa-close"></i></div>
-        <Menu />
-    </div>
-    <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
+            <div class="mobile-menu @isCollapsed">
+                <div class="button-closer" @onclick="Toggle"><i class="fa fa-close"></i></div>
+                <Menu />
+            </div>
+            <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
 
-    <UserComponent />
+            <UserComponent @ref="userComponent" />
 
-    <div class="main-container">
-        <main class="main-content">
-            @Body
-        </main>
-    </div>
-
-</div>
+            <div class="main-container">
+                <main class="main-content @theme">
+                    @Body
+                </main>
+            </div>
+        </div>
+    </CascadingValue>
+</CascadingValue>
 
 @code
 {
     bool collapse = true;
     string isCollapsed = "";
+    string theme = "";
+    [CascadingParameter]
+    private Task<AuthenticationState> authStateTask { get; set; }
+    UserComponent userComponent = new UserComponent();
+    AppUser user;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var authState = await authStateTask;
+            var userClaims = authState.User;
+            user = await userManager.GetUserAsync(userClaims);
+            theme = user.SelectedTheme;
+            StateHasChanged();
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        userComponent.ThemeChanged += ThemeHandler;
+    }
 
     void Toggle()
     {
         collapse = !collapse;
         isCollapsed = collapse ? "" : "NoCollapse";
+    }
+
+    void ThemeHandler(bool callBack)
+    {
+        if (callBack)
+            theme = "dark";
+        else
+            theme = "";
+        UpdateTheme(theme);
+        StateHasChanged();
+    }
+    async Task UpdateTheme(string style)
+    {
+        user.SelectedTheme = style;
+        await userManager.UpdateAsync(user);
     }
 }

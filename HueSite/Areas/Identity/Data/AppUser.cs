@@ -14,5 +14,6 @@ namespace HueSite.Areas.Identity.Data
         [PersonalData]
         public string Nickname { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
+        public string SelectedTheme { get; set; }
     }
 }

@@ -12,3 +12,8 @@
 {
     background-color: crimson;
 }
+
+.table.dark {
+    background-color: #252525;
+    color: white;
+}

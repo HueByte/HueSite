@@ -16,7 +16,7 @@ namespace HueSite.Data.IServices
         Task<List<AppUser>> GetUsers();
         Task RemoveRole(string roleName);
         Task<List<IdentityRole>> GetRoles();
-        Task<List<DisplayUser>> CreateDisplayUsers(List<AppUser> users);
+        Task<List<DisplayUser>> CreateDisplayUsers();
         Task RemoveUser(string id);
     }
 }

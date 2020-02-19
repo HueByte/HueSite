@@ -64,10 +64,10 @@
     border-radius: 20px;
 }
 
-.main-content.dark {
-    background-color: #252525;
-    color: white;
-}
+    .main-content.dark {
+        background-color: #252525;
+        color: white;
+    }
 
 /*#endregion */
 
@@ -158,11 +158,15 @@
 
 @media screen and (max-width: 550px) {
 
-    .main-container{
+    .main-container {
         width: 100vw;
     }
 
-    .button-expander{
+    .main-content {
+        margin-top: 3em;
+    }
+
+    .button-expander {
         background-color: #030301;
         color: white;
     }

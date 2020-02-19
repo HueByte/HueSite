@@ -4,28 +4,29 @@
 @inject INotes notes
 
 
-<div class="">
-    <div>
-        <h3>Note list:</h3>
-        @if (user != null)
-        {
-            AssignNotes();
+<h3>Note list:</h3>
+<div class="note-container">
+    @if (user != null)
+    {
+        AssignNotes();
 
-            if (user.Notes == null)
+        if (user.Notes != null)
+        {
+            @foreach (var note in user.Notes)
             {
-                user.Notes = new List<Note>();
+                <div class="note-list">@note.Name</div>
             }
-            foreach (var note in user.Notes)
-            {
-                <p>@note.Id</p>
-            }
-            <p>loadingd</p>
         }
         else
         {
-            <p>bneng </p>
+            user.Notes = new List<Note>();
         }
-    </div>
+
+    }
+    else
+    {
+        <p>bneng </p>
+    }
 </div>
 
 @code {
@@ -44,7 +45,7 @@
     async Task AssignNotes()
     {
         user.Notes = await notes.GetNotesByUserID(user.Id);
-        if(user.Notes == null)
+        if (user.Notes == null)
         {
             user.Notes = new List<Note>();
         }

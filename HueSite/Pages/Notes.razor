@@ -1,0 +1,52 @@
+﻿@page "/notes/"
+@using HueSite.Data.IServices.INotes
+@using HueSite.Data.Models
+@inject INotes notes
+
+
+<div class="">
+    <div>
+        <h3>Note list:</h3>
+        @if (user != null)
+        {
+            AssignNotes();
+
+            if (user.Notes == null)
+            {
+                user.Notes = new List<Note>();
+            }
+            foreach (var note in user.Notes)
+            {
+                <p>@note.Id</p>
+            }
+            <p>loadingd</p>
+        }
+        else
+        {
+            <p>bneng </p>
+        }
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] AppUser user { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //user.Notes = await notes.GetNotesByUserID(user.Id);
+    }
+
+    async Task AssignNotes()
+    {
+        user.Notes = await notes.GetNotesByUserID(user.Id);
+        if(user.Notes == null)
+        {
+            user.Notes = new List<Note>();
+        }
+    }
+}

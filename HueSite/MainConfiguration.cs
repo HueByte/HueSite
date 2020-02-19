@@ -19,6 +19,8 @@ using HueSite.Data.Services.SortingAlg;
 using HueSite.Areas.Identity.Data;
 using HueSite.Data.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using HueSite.Data.IServices.INotes;
+using HueSite.Data.Services.Notes;
 
 namespace HueSite
 {
@@ -47,6 +49,7 @@ namespace HueSite
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<EmailSettings>(conf.GetSection("EmailSettings"));
             services.AddTransient<IGenerateEmail, GenerateEmail>();
+            services.AddTransient<INotes, Notes>();
 
             //Sorting algs
             services.AddScoped<ISorting, Sorting>();

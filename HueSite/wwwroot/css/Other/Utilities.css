@@ -69,5 +69,6 @@ input::-moz-focus-inner {
     .input-blackbg[type=text]:focus {
         border-radius: 10px;
         border: 1px solid #cc3380 !important;
+        transform: scale(1);
     }
  

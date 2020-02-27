@@ -1,23 +1,58 @@
-﻿.note-container
-{
+﻿.note-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
     width: 100%;
 }
 
-.note-list
-{
-    background-color: #4800ff;
+.note-list {
     color: white;
+    font-weight: bold;
     padding: 10px;
     margin: 1em;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    max-width: 30%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.note-list.dark
-{
+    .note-list:nth-child(even) {
+        background-color: #cc3380;
+    }
 
+    .note-list:nth-child(odd) {
+        background-color: #33cccc;
+    }
+
+    .note-list.dark:hover {
+        transform: scale(1.2);
+        background-color: white;
+        color: black;
+    }
+
+    .note-list:hover {
+        transform: scale(1.2);
+        background-color: black;
+        color: white;
+    }
+
+.Edit-note-input[type=text] {
+    border-radius: 10px 10px 0px 0px;
+}
+
+.Edit-note-input.dark[type=text]
+{
+    border-radius: 10px 10px 0px 0px;
+}
+
+.Edit-note-input.title[type=text] {
+    border-radius: 10px 10px 0px 0px;
+    background-color: #252525;
+    margin-top: 20px;
+    width: auto;
 }

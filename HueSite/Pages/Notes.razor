@@ -2,6 +2,7 @@
 @using HueSite.Data.IServices.INotes
 @using HueSite.Data.Models
 @inject INotes notes
+@inject NavigationManager navManager
 
 
 <h3>Note list:</h3>
@@ -10,37 +11,20 @@
     {
         AssignNotes();
 
-        if (user.Notes != null)
+        <div class="note-list" style="background-color: teal"><i class="fas fa-plus-square"></i> Create new Note</div>
+        @foreach (var note in user.Notes)
         {
-            @foreach (var note in user.Notes)
-            {
-                <div class="note-list">@note.Name</div>
-            }
+            <div class="note-list @user.SelectedTheme" @onclick="@( () => { navManager.NavigateTo($"/note/{note.Id}"); })"><i class="fas fa-sticky-note"></i> @note.Name</div>
         }
-        else
-        {
-            user.Notes = new List<Note>();
-        }
-
     }
     else
     {
-        <p>bneng </p>
+        <p style="text-align:center">Loading data...</p>
     }
 </div>
 
 @code {
     [CascadingParameter] AppUser user { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        //user.Notes = await notes.GetNotesByUserID(user.Id);
-    }
 
     async Task AssignNotes()
     {
@@ -49,5 +33,10 @@
         {
             user.Notes = new List<Note>();
         }
+    }
+
+    async Task CreateNote()
+    {
+
     }
 }

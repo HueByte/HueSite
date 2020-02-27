@@ -1,6 +1,5 @@
 ﻿@inject NavigationManager nav
 @implements IDisposable
-
 <!--<div @onclick="(() => nav.NavigateTo(Homepage))"><div class="item" style="margin-top: 30px;"><i class="fa fa-fw fa-home"></i> Homepage</div></div>-->
 <NavLink href="/"><div class="item" style="margin-top: 30px;"><i class="fas fa-fire"></i> Homepage</div></NavLink>
 <AuthorizeView Roles="admin">
@@ -9,6 +8,7 @@
     </Authorized>
 </AuthorizeView>
 <NavLink href="/sortingalgorithms"><div class="item @sortingState"><i class="fas fa-filter"></i> Sorting Algorithms</div></NavLink>
+<NavLink href="/notes"><div class="item @notesState"><i class="fas fa-filter"></i> Notes</div></NavLink>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
@@ -19,9 +19,11 @@
     //Active links
     string adminState = "";
     string sortingState = "";
+    string notesState = "";
 
     protected override Task OnInitializedAsync()
     {
+        ColorLocation();
         nav.LocationChanged += LocationChanged;
         return base.OnInitializedAsync();
     }
@@ -29,8 +31,14 @@
     void LocationChanged(object sender, LocationChangedEventArgs e)
     {
         string navMethod = e.IsNavigationIntercepted ? "HTML" : "code";
+        ColorLocation();
+    }
+
+    void ColorLocation()
+    {
         adminState = nav.Uri == $"{nav.BaseUri}admin" ? "current-item" : "";
         sortingState = nav.Uri == $"{nav.BaseUri}sortingalgorithms" ? "current-item" : "";
+        notesState = nav.Uri == $"{nav.BaseUri}notes" ? "current-item" : "";
         StateHasChanged();
     }
 

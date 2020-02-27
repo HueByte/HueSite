@@ -1,0 +1,24 @@
+﻿@using HueSite.Data.IServices.INotes
+@inject INotes notes
+@inject NavigationManager navManager
+@page "/note/{id:int}"
+
+@if (user != null)
+{
+    <input type="text" class="input-blackbg Edit-note-input @user.SelectedTheme" placeholder="Note Name" />
+    <input type="text" class="input-blackbg Edit-note-input title @user.SelectedTheme" placeholder="Title" />
+}
+else
+{
+    <p style="text-align:center">Loading data...</p>
+}
+@code {
+    [Parameter] public int id { get; set; }
+    [CascadingParameter] AppUser user { get; set; }
+
+    async Task remove()
+    {
+        await notes.DeleteNoteById(id);
+        navManager.NavigateTo("/notes");
+    }
+}

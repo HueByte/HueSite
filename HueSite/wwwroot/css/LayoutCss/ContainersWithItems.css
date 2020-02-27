@@ -135,9 +135,6 @@
     cursor: pointer;
 }
 
-.current-item {
-    background-color: #FF4365;
-}
 
 .item:hover {
     background-color: white;

@@ -1,11 +1,12 @@
 ﻿@using HueSite.Data.IServices.INotes
+@using HueSite.Data.Models
 @inject INotes notes
 @inject NavigationManager navManager
-@page "/note/{string:int}"
+@page "/note/{id}"
 
 @if (user != null)
 {
-    <input type="text" class="input-blackbg Edit-note-input @user.SelectedTheme" placeholder="Note Name" />
+    <input type="text" class="input-blackbg Edit-note-input @user.SelectedTheme" placeholder="@currentNote.Name" />
     <input type="text" class="input-blackbg Edit-note-input title @user.SelectedTheme" placeholder="Title" />
 }
 else
@@ -15,7 +16,12 @@ else
 @code {
     [Parameter] public string id { get; set; }
     [CascadingParameter] AppUser user { get; set; }
+    Note currentNote { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        currentNote = await notes.GetNoteByID(id);
+    }
     async Task remove()
     {
         await notes.DeleteNoteById(id);

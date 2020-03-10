@@ -17,14 +17,20 @@ namespace HueSite.Data.Services.Notes
 
         public async Task<List<Note>> GetNotesByUserID(string ID)
         {
-            return null;
             return db.Notes.Where(id => id.UserId == ID).ToList();
         }
 
         public async Task CreateNote(Note newNote)
         {
             await db.Notes.AddAsync(newNote);
+            await db.SaveChangesAsync();
         }
+
+        public Task<Note> GetNoteByID(string ID)
+        {
+            return db.Notes.FirstOrDefault(n => n.Id == ID);
+        }
+
         public async Task DeleteNoteById(string ID)
         {
             var RecordToDelete = db.Notes.FirstOrDefault(note => note.Id == ID);

@@ -37,6 +37,9 @@
 
     async Task CreateNote()
     {
-        navManager.NavigateTo("");
+        Note newNote = new Note() { Name = "test", UserId = user.Id };
+        await notes.CreateNote(newNote);
+        StateHasChanged();
+        navManager.NavigateTo("/notes");
     }
 }

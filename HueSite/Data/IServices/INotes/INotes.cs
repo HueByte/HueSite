@@ -11,5 +11,6 @@ namespace HueSite.Data.IServices.INotes
         public Task<List<Note>> GetNotesByUserID(string ID);
         public Task DeleteNoteById(string ID);
         public Task CreateNote(Note newNote);
+        public Task<Note> GetNoteByID(string ID);
     }
 }

@@ -9,6 +9,7 @@ namespace HueSite.Data.IServices.INotes
     interface INotes
     {
         public Task<List<Note>> GetNotesByUserID(string ID);
-        public Task DeleteNoteById(int ID);
+        public Task DeleteNoteById(string ID);
+        public Task CreateNote(Note newNote);
     }
 }

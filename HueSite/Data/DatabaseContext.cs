@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using HueSite.Areas.Identity.Data;
-using HueSite.Migrations;
+//using HueSite.Migrations;
 using HueSite.Data.Models;
 
 namespace HueSite.Data

@@ -1,7 +1,7 @@
 ﻿@using HueSite.Data.IServices.INotes
 @inject INotes notes
 @inject NavigationManager navManager
-@page "/note/{id:int}"
+@page "/note/{string:int}"
 
 @if (user != null)
 {
@@ -13,7 +13,7 @@ else
     <p style="text-align:center">Loading data...</p>
 }
 @code {
-    [Parameter] public int id { get; set; }
+    [Parameter] public string id { get; set; }
     [CascadingParameter] AppUser user { get; set; }
 
     async Task remove()

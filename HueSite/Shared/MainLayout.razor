@@ -13,7 +13,7 @@
                 <div class="button-closer" @onclick="Toggle"><i class="fa fa-close"></i></div>
                 <Menu />
             </div>
-            <div class="button-expander" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
+            <div class="button-expander @isCollapsed" @onclick="Toggle"><i class="fas fa-ellipsis-v"></i></div>
 
             <UserComponent @ref="userComponent" />
 

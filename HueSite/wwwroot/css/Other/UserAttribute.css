@@ -7,7 +7,7 @@
     padding: 10px;
     right: 0;
     top: 1em;
-    background-color: #000;
+    background-color: rgba(0,0,0,0.93);
     transform: translateX(100%);
     transition: 0.5s;
     color: white;
@@ -64,6 +64,10 @@
 
     .user-button:hover {
         transform: scale(1.2);
+    }
+
+    .user-button.NoCollapse {
+        opacity: 0;
     }
 
 .user-button-closer {

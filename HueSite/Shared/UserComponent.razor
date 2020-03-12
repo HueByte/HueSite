@@ -36,7 +36,7 @@
                 <p>Loading...</p>
             }
         </div>
-        <div class="user-button" @onclick="UserToggle"><i class="fa fa-user"></i></div>
+        <div class="user-button @isCollapsedUser" @onclick="UserToggle"><i class="fa fa-user"></i></div>
     </Authorized>
 </AuthorizeView>
 
@@ -46,7 +46,6 @@
     bool ThemeValue = false;
 
     bool collapseUser = true;
-    bool FirstDownloadUser = true;
     string isCollapsedUser = "";
 
     async Task UserToggle()

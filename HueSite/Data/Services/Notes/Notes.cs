@@ -28,7 +28,7 @@ namespace HueSite.Data.Services.Notes
 
         public Task<Note> GetNoteByID(string ID)
         {
-            return db.Notes.FirstOrDefault(n => n.Id == ID);
+            return Task.FromResult(db.Notes.FirstOrDefault(note => note.Id == ID));
         }
 
         public async Task DeleteNoteById(string ID)

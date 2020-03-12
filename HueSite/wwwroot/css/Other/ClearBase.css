@@ -1,0 +1,54 @@
+﻿/*Clear Button*/
+.Clear-TextButton {
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* Remove excess padding and border in Firefox 4+ */
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/*Clear Input text*/
+.input-blackbg[type=text], .text-area {
+    background-color: rgb(27,27,27);
+    border: none;
+    color: white;
+    border: 1px solid rgb(27,27,27);
+    border-bottom: 1px solid #cc3380;
+    padding: 5px;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+}
+
+    .input-blackbg[type=text]:focus {
+        border-radius: 10px;
+        border: 1px solid #cc3380 !important;
+        transform: scale(1);
+    }
+
+/*Clear TextArea*/
+.Clear-TextArea {
+    border: none;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none; /*remove the resize handle on the bottom right*/
+}

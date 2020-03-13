@@ -33,8 +33,7 @@ input::-moz-focus-inner {
     padding: 0;
 }
 
-.action-button
-{
+.action-button {
     background-color: rgb(27,27,27);
     color: white;
     padding: 10px;
@@ -53,9 +52,18 @@ input::-moz-focus-inner {
     color: white;
     border-radius: 5px;
     padding: 10px;
+    cursor: pointer;
+    text-align: center;
 }
 
-.hidden-state
-{
+.button-transition-scale {
+    transition: 0.5s;
+}
+
+    .button-transition-scale:hover {
+        transform: scale(1.1);
+    }
+
+.hidden-state {
     display: none;
 }

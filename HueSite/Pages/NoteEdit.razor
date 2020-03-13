@@ -6,13 +6,14 @@
 
 @if (user != null)
 {
-    <input type="text" class="input-blackbg Edit-note-input @user.SelectedTheme" placeholder="@currentNote.Name" />
+    <input type="text" class="input-blackbg Edit-note-input @user.SelectedTheme" placeholder="@currentNote.Name" @bind="currentNote.Name" spellcheck="@spellcheck"/>
+    <input type="text" class="input-blackbg Edit-note-input title @user.SelectedTheme" placeholder="Title" @bind="currentNote.Title" spellcheck="@spellcheck"/>
     <div class="edit-note-actions">
-        <input type="text" class="input-blackbg Edit-note-input title @user.SelectedTheme" placeholder="Title" />
-        <div class="Clear-Button button-1" style="flex-grow: 1;">Save</div>
-        <div class="Clear-Button button-1" style="flex-grow: 1;">Delete</div>
+        <div class="Clear-Button button-1 align-actions-buttons button-transition-scale @stateSave" @onclick="Save">Save</div>
+        <div class="Clear-Button button-1 align-actions-buttons button-transition-scale" @onclick="Delete">Delete</div>
+        <div class="Clear-Button button-1 align-actions-buttons button-transition-scale @stateSpell" @onclick="Spellcheck">Spellcheck</div>
     </div>
-    <textarea class="Clear-TextArea text-area Edit-note-input TextBox" rows="20"/>
+    <textarea class="Clear-TextArea text-area Edit-note-input TextBox" rows="20" @bind="currentNote.Text" spellcheck="@spellcheck" data-gramm="@spellcheck"/>
 }
 else
 {
@@ -22,6 +23,9 @@ else
     [Parameter] public string id { get; set; }
     [CascadingParameter] AppUser user { get; set; }
     Note currentNote { get; set; }
+    string stateSave = "";
+    string spellcheck = "false";
+    string stateSpell = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -31,5 +35,31 @@ else
     {
         await notes.DeleteNoteById(id);
         navManager.NavigateTo("/notes");
+    }
+
+    async Task Save()
+    {
+        bool result = await notes.UpdateNote(currentNote);
+        if (result)
+            stateSave = "green";
+        else
+            stateSave = "red";
+        StateHasChanged();
+        await Task.Delay(1000);
+        stateSave = "";
+        StateHasChanged();
+    }
+
+    async Task Delete()
+    {
+        await notes.DeleteNoteById(currentNote.Id);
+        navManager.NavigateTo("/notes");
+    }
+
+    void Spellcheck()
+    {
+        spellcheck = spellcheck == "true" ? "false" : "true";
+        stateSpell = stateSpell == "" ? "isActive" : "";
+        StateHasChanged();
     }
 }

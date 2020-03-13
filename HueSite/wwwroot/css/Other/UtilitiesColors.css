@@ -1,16 +1,17 @@
-﻿.green
-{
-    background-color: lightseagreen;
+﻿.green {
+    background-color: #00ff6a;
 }
 
-.isActive
-{
+.isActive {
     background-color: darkcyan;
 }
 
-.red
-{
+.red {
     background-color: crimson;
+}
+
+.blue {
+    background-color: #00bbff;
 }
 
 .table.dark {

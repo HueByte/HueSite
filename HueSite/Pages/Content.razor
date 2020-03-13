@@ -3,102 +3,54 @@
 @using Data
 @inject DatabaseContext context
 
-<h3 style="text-align:center;">Welcome to programs!</h3>
-<h2>About:</h2>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-    https://github.com/HueByte/HueSite
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
-<p>
-    That's the main page of the programs section.<br />
-    You can find here programs made via Blazor.
-</p>
+<h3 style="text-align:center;">Welcome to HueSite!</h3>
+<div class="des-container">
+    <img src="/icons/blazor.png" alt="blazor" class="pics-main" />
+    <div class="text-container">
+        <p>
+            Blazor is an web framework that, in short, allows you to write C# and HTML to create client-side single-page applications. In practice, it looks very similar to Razor Pages applications.
 
-<h4>@time</h4>
-<h4 style="color: red;">@polish</h4>
+            The written C# is then compiled down to a standard called WebAssembly, which allows for use on all modern browsers. In theory, we are now able to create client-side applications using C# and .NET Core.
+        </p>
+    </div>
+</div>
+<div class="des-container">
+    <img src="/icons/dotnetcore.png" alt="blazor" class="pics-main" />
+    <div class="text-container">
+        <p>
+            .NET Core is an open-source, general-purpose development platform maintained by Microsoft and the .NET community on GitHub. It's cross-platform (supporting Windows, macOS, and Linux) and can be used to build device, cloud, and IoT applications.
+            The latest version is .NET Core 3.1. 3.1 includes minor improvements over .NET Core 3.0, however, .NET Core 3.1 is a long-term supported release.
+            C#, Visual Basic, and F# languages can be used to write applications and libraries for .NET Core.
+        </p>
+    </div>
+</div>
+<div class="des-container">
+    <img src="/icons/icon-core.png" alt="blazor" class="pics-main" />
+    <div class="text-container">
+        <p>
+            ASP.NET Core is the new web framework from Microsoft. It has been redesigned from the ground up to be fast, flexible, modern, and work across different platforms. Moving forward, ASP.NET Core is the framework that can be used for web development with .NET. If you have any experience with MVC or Web API over the last few years, you will notice some familiar features. At the end this tutorial, you will have everything you need to start using ASP.NET Core and write an application that can create, edit, and view data from a database.
+        </p>
+    </div>
+</div>
+<div class="des-container">
+    <img src="/icons/kawaio2.png" alt="blazor" class="pics-main" />
+    <div class="text-container">
+        <p>
+            And Finally there's me! Whole project is on my github:
+            <span><i class="fab fa-github"></i> <a href="https://github.com/HueByte" target="_blank" style="color: #cc3380;">https://github.com/HueByte</a></span>.
+            <br />
+            I'm starting full-stack developer which loves new technologies just like blazor!
+            Feel free to contact me on discord HueByte ❤#3539.
+            <br />
+            Application has hashed and salted passwords, you can download all the data I have about you at that link: 
+            <a href="/Identity/Account/Manage/PersonalData" style="color: orange;">Puff teleportation!</a>
+            <br />
+            I'll hardly recommend using black theme, just take care about your eyes :)
+        </p>
+    </div>
+</div>
 
 @code {
 
-    DateTime date;
-    string time;
-    string polish;
-
-    protected override async Task OnInitializedAsync()
-    {
-        date = new DateTime();
-        await Task.Run(async () =>
-        {
-            while (true)
-            {
-                time = DateTime.Now.ToString();
-
-                await Task.Delay(1000);
-
-                CultureInfo ci = new CultureInfo("pl-PL");
-                DateTime dt = DateTime.Now;
-                polish = DateTime.Now.ToString("f", ci);
-
-                await InvokeAsync(StateHasChanged);
-            }
-        });
-    }
-
-    public async Task<string> Timer()
-    {
-        return DateTime.Now.ToString();
-    }
 
 }

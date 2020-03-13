@@ -45,16 +45,11 @@
     border-radius: 10px 10px 0px 0px;
 }
 
-.Edit-note-input.dark[type=text]
-{
-    border-radius: 10px 10px 0px 0px;
-}
-
 .Edit-note-input.title[type=text] {
+    margin-top: 20px;
     border-radius: 10px 10px 0px 0px;
     background-color: #252525;
-    width: inherit;
-    flex-grow: 2;
+    max-width: 300px;
 }
 
 .Edit-note-input.TextBox {
@@ -69,7 +64,12 @@
     /*flex-wrap: nowrap;*/
     flex-direction: row;
     justify-content: space-evenly;
-    max-width: 700px;
+    max-width: 400px;
+}
+
+.align-actions-buttons {
+    margin-right: 1em;
+    flex-grow: 1;
 }
 
 

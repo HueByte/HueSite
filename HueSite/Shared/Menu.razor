@@ -2,14 +2,14 @@
 @implements IDisposable
 <!--<div @onclick="(() => nav.NavigateTo(Homepage))"><div class="item" style="margin-top: 30px;"><i class="fa fa-fw fa-home"></i> Homepage</div></div>-->
 <NavLink href="/"><div class="item" style="margin-top: 30px;"><i class="fas fa-fire"></i> Homepage</div></NavLink>
+<NavLink href="/Page"><div class="item @mainPageState"><i class="fas fa-circle-notch"></i> Programs Homepage</div></NavLink>
 <AuthorizeView Roles="admin">
     <Authorized>
         <NavLink href="/admin"><div class="item @adminState"><i class="fas fa-code-branch"></i> Admin panel</div></NavLink>
     </Authorized>
 </AuthorizeView>
 <NavLink href="/sortingalgorithms"><div class="item @sortingState"><i class="fas fa-filter"></i> Sorting Algorithms</div></NavLink>
-<NavLink href="/notes"><div class="item @notesState"><i class="fas fa-filter"></i> Notes</div></NavLink>
-<div class="item"><i class="fa fa-code"></i> item</div>
+<NavLink href="/notes"><div class="item @notesState"><i class="fas fa-sticky-note"></i> Notes</div></NavLink>
 <div class="item"><i class="fa fa-code"></i> item</div>
 <div class="item"><i class="fa fa-code"></i> item</div>
 
@@ -17,6 +17,7 @@
 
 @code {
     //Active links
+    string mainPageState = "";
     string adminState = "";
     string sortingState = "";
     string notesState = "";
@@ -39,6 +40,8 @@
         adminState = nav.Uri == $"{nav.BaseUri}admin" ? "current-item" : "";
         sortingState = nav.Uri == $"{nav.BaseUri}sortingalgorithms" ? "current-item" : "";
         notesState = nav.Uri == $"{nav.BaseUri}notes" ? "current-item" : "";
+        mainPageState = nav.Uri == $"{nav.BaseUri}Page" ? "current-item" : "";
+
         StateHasChanged();
     }
 

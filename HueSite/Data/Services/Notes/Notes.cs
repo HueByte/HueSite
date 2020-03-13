@@ -42,5 +42,19 @@ namespace HueSite.Data.Services.Notes
             }
             else { }
         }
+
+        public async Task<bool> UpdateNote(Note updated)
+        {
+            try
+            {
+                db.Notes.Update(updated);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

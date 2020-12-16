@@ -1,4 +1,6 @@
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" title="logo" alt="BlazorLogo">
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Blazor.png" title="logo" alt="BlazorLogo" width="400" height="400" align="center">
+</p>
 
 ## ` 💻 What is it?`
 ### Huesite is a simple Blazor ASP.NET Core 3.1 Server side app made for learning purposes and fun. As expected this is a amazing platform which gonna provide us a great future!  
